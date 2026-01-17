@@ -4,16 +4,12 @@
     <h3><em>Build high-quality software faster.</em></h3>
 </div>
 
-> **Fork Notice:** This is a personal fork of [github/spec-kit](https://github.com/github/spec-kit) with customizations. See the [original repository](https://github.com/github/spec-kit) for the upstream project.
+> **Fork Notice:** This is a personal fork of [github/spec-kit](https://github.com/github/spec-kit) with customizations. See [FORK.md](./FORK.md) for details or the [original repository](https://github.com/github/spec-kit) for the upstream project.
 
 <p align="center">
-    <strong>An open source toolkit that allows you to focus on product scenarios and predictable outcomes instead of vibe coding every piece from scratch.</strong>
+    <strong>An open source toolkit that allows you to focus on product scenarios and predictable outcomes instead of vibe coding and hoping for the best.</strong>
 </p>
 
-<p align="center">
-    <a href="https://github.com/Waveform-Analytics/spec-kit/stargazers"><img src="https://img.shields.io/github/stars/Waveform-Analytics/spec-kit?style=social" alt="GitHub stars"/></a>
-    <a href="https://github.com/Waveform-Analytics/spec-kit/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Waveform-Analytics/spec-kit" alt="License"/></a>
-</p>
 
 ---
 

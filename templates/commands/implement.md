@@ -13,6 +13,24 @@ $ARGUMENTS
 
 You **MUST** consider the user input before proceeding (if not empty).
 
+## Review Workflow (Default)
+
+By default, implement tasks iteratively with human review:
+
+1. **Write code** for the current task
+2. **Notify user**: "Code written to [file]. Ready for review. You can add inline comments:
+   - `[Q: ...]` for questions
+   - `[C: ...]` for feedback
+   - `[TODO: ...]` for things to add
+
+   Say 'ready' when done or 'run' to test as-is."
+3. **Process markers**: When user says ready, scan for markers:
+   - Straightforward items: fix immediately
+   - Complex or ambiguous items: discuss with user first
+4. **Repeat** until user approves, then run/test
+
+For automated execution without review pauses, user can request "implement all" or "no review".
+
 ## Outline
 
 1. Run `{SCRIPT}` from repo root and parse FEATURE_DIR and AVAILABLE_DOCS list. All paths must be absolute. For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
