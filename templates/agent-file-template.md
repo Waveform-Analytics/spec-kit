@@ -24,6 +24,10 @@ Auto-generated from all feature plans. Last updated: [DATE]
 
 [LAST 3 FEATURES AND WHAT THEY ADDED]
 
+## Guidelines
+
+- **Spec-first**: Before implementing any feature, ensure a spec exists. If unclear, write/update the spec first.
+
 ## Review Workflow
 
 For iterative development with human review, use inline markers in code:
