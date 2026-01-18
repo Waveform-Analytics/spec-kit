@@ -57,6 +57,37 @@ Added `/speckit.tests` command to generate reviewer-friendly test plans:
 - `templates/tests-template.md` - Template for test plans
 - `templates/commands/tests.md` - Slash command
 
+## Versioning
+
+This project uses [hatch-vcs](https://github.com/ofek/hatch-vcs) for dynamic versioning from git tags.
+
+### How it works
+
+- **Patch versions** (0.0.X) are created automatically by the release workflow on every push to `main`
+- **Minor/major versions** require a manual tag
+
+### To bump minor or major version
+
+```bash
+# Minor bump (new features)
+git tag v0.1.0
+git push --tags
+
+# Major bump (breaking changes)
+git tag v1.0.0
+git push --tags
+```
+
+The workflow then continues auto-incrementing patches from your new tag.
+
+### Version convention
+
+| Bump | When | Example |
+|------|------|---------|
+| PATCH | Bug fixes, small tweaks | 0.0.1 → 0.0.2 |
+| MINOR | New features, backward compatible | 0.0.5 → 0.1.0 |
+| MAJOR | Breaking changes | 0.9.0 → 1.0.0 |
+
 ## Upstream Sync
 
 **Based on:** github/spec-kit @ 9111699 (2026-01-16)
