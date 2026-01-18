@@ -14,10 +14,13 @@
 
 ### Iterative implement workflow with review markers
 
-Changed `/speckit.implement` default behavior to pause for human review. After writing code, the agent notifies the user and reminds them they can add inline markers:
-- `[Q: ...]` - Questions
-- `[C: ...]` - Comments/feedback
-- `[TODO: ...]` - Things to add
+Changed `/speckit.implement` default behavior to pause for human review after every file:
+- Stops after each file is created, prompts user to review
+- AI includes detailed comments in code to make review easier
+- User can add inline markers:
+  - `[Q: ...]` - Questions
+  - `[C: ...]` - Comments/feedback
+  - `[TODO: ...]` - Things to add
 
 When processing markers, straightforward items are fixed immediately; complex ones are discussed first.
 

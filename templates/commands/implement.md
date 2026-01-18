@@ -15,19 +15,28 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 ## Review Workflow (Default)
 
-By default, implement tasks iteratively with human review:
+By default, implement with human review after every file:
 
-1. **Write code** for the current task
-2. **Notify user**: "Code written to [file]. Ready for review. You can add inline comments:
-   - `[Q: ...]` for questions
-   - `[C: ...]` for feedback
-   - `[TODO: ...]` for things to add
+1. **Write code** for the current file:
+   - Include detailed comments explaining what each section does
+   - Comment on non-obvious logic, assumptions, and design decisions
+   - Make the code easy to review and understand
 
-   Say 'ready' when done or 'run' to test as-is."
+2. **Stop and notify user** after each file:
+   > "Created [file]. Ready for review.
+   >
+   > Add inline comments if needed:
+   > - `[Q: ...]` for questions
+   > - `[C: ...]` for feedback
+   > - `[TODO: ...]` for things to add
+   >
+   > Say 'ready' when done, 'run' to test, or 'continue' to proceed to next file."
+
 3. **Process markers**: When user says ready, scan for markers:
    - Straightforward items: fix immediately
    - Complex or ambiguous items: discuss with user first
-4. **Repeat** until user approves, then run/test
+
+4. **Repeat** for each file until task is complete
 
 For automated execution without review pauses, user can request "implement all" or "no review".
 

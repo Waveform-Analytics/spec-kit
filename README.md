@@ -71,6 +71,21 @@ To upgrade Specify, see the [Upgrade Guide](./docs/upgrade.md) for detailed inst
 uv tool install specify-cli --force --from git+https://github.com/Waveform-Analytics/spec-kit.git
 ```
 
+#### Switching from upstream spec-kit
+
+If you have the original [github/spec-kit](https://github.com/github/spec-kit) installed and want to switch to this fork:
+
+```bash
+# Option 1: Force reinstall (replaces existing)
+uv tool install specify-cli --force --from git+https://github.com/Waveform-Analytics/spec-kit.git
+
+# Option 2: Uninstall first, then install
+uv tool uninstall specify-cli
+uv tool install specify-cli --from git+https://github.com/Waveform-Analytics/spec-kit.git
+```
+
+See [FORK.md](./FORK.md) for what's different in this fork.
+
 #### Option 2: One-time Usage
 
 Run directly without installing:
