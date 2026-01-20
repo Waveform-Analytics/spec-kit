@@ -22,6 +22,7 @@ You **MUST** consider the user input before proceeding (if not empty).
 ## Purpose
 
 Generate a `tests.md` file that:
+
 1. Documents what behaviors will be tested (for domain reviewers)
 2. Provides implementation guidance (for developers/AI)
 3. Ensures traceability from requirements to tests
@@ -87,12 +88,14 @@ important requirements have test coverage. Technical details go in an appendix.
 ### Language Guidelines
 
 **Primary sections (for reviewers)** - Use plain, non-technical language:
+
 - "Load a configuration file and verify all values are accessible"
 - "Attempt to save with missing required fields, confirm error message"
 - NOT: "Assert model.field == expected using pytest fixture"
 - NOT: "Mock the database connection and verify query parameters"
 
 **Implementation Notes (for developers)** - Technical details allowed:
+
 - File paths, test names, fixture locations
 - Framework-specific patterns
 - Directory structure
@@ -101,13 +104,13 @@ important requirements have test coverage. Technical details go in an appendix.
 
 For each acceptance scenario in spec.md:
 
-```
+```text
 Given [initial state], When [action], Then [expected outcome]
 ```
 
 Create a test description:
 
-```
+```markdown
 | Requirement | How It's Tested |
 |-------------|-----------------|
 | [Action] produces [outcome] | [Plain description of test] |
@@ -117,7 +120,7 @@ Create a test description:
 
 For each edge case in spec.md, create a row:
 
-```
+```markdown
 | Scenario | Expected Behavior | Covered |
 |----------|-------------------|---------|
 | [Edge case from spec] | [Expected handling] | [ ] |
@@ -132,6 +135,7 @@ For each edge case in spec.md, create a row:
 ### Coverage Checklist
 
 Always include these standard checks:
+
 - [ ] Every user story has test coverage defined
 - [ ] All acceptance scenarios from spec.md are addressed
 - [ ] Edge cases from spec.md are covered

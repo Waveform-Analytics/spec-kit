@@ -18,6 +18,7 @@ Track features requiring specifications, organized by implementation phase.
 [Description of what this phase delivers]
 
 ### 1.1 [Feature Name]
+
 - **Status**: Not started
 - **What**: [Brief description]
 - **Why**: [Rationale or constitution principle]

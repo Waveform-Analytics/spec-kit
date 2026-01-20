@@ -10,7 +10,6 @@
     <strong>An open source toolkit that allows you to focus on product scenarios and predictable outcomes instead of vibe coding and hoping for the best.</strong>
 </p>
 
-
 ---
 
 ## Table of Contents

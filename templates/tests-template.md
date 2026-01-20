@@ -27,6 +27,7 @@ implementation begins.
 **Coverage goal**: [e.g., All user stories and edge cases covered]
 
 **Key behaviors being tested**:
+
 - [Behavior 1 in plain language]
 - [Behavior 2 in plain language]
 - [Behavior 3 in plain language]
@@ -54,6 +55,7 @@ implementation begins.
 | [Requirement from spec] | [Plain description of verification] |
 
 **Specific checks**:
+
 - [ ] [Plain description of what's checked]
 - [ ] [Plain description of what's checked]
 
@@ -68,6 +70,7 @@ implementation begins.
 | [Requirement from spec] | [Plain description of verification] |
 
 **Specific checks**:
+
 - [ ] [Plain description]
 
 ---
@@ -100,16 +103,19 @@ implementation begins.
   Checklist for reviewers to assess test completeness.
 -->
 
-**Requirements**
+### Requirements
+
 - [ ] Every user story has test coverage defined
 - [ ] All acceptance scenarios from spec.md are addressed
 - [ ] Edge cases from spec.md are covered
 
-**Error Handling**
+### Error Handling
+
 - [ ] Invalid inputs produce clear error messages
 - [ ] Errors identify what went wrong and where
 
-**Traceability**
+### Traceability
+
 - [ ] Each test maps back to a requirement or acceptance scenario
 
 ---
@@ -125,7 +131,7 @@ implementation begins.
 ---
 ---
 
-# Implementation Notes
+## Implementation Notes
 
 <!--
   Technical details for developers and AI assistants.
@@ -136,18 +142,19 @@ implementation begins.
 
 Use consistent test names following this pattern:
 
-```
+```text
 test_[component]_[behavior]_[scenario]
 ```
 
 **Examples**:
+
 - `test_loader_valid_input_succeeds`
 - `test_loader_missing_field_returns_error`
 - `test_validator_boundary_value_accepted`
 
 ## Test File Organization
 
-```
+```text
 tests/
 ├── unit/           # Isolated component tests
 ├── integration/    # Multi-component tests

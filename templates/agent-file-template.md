@@ -39,6 +39,7 @@ For iterative development with human review, use inline markers in code:
 When you say "check my comments", the agent scans files for these markers and addresses each one.
 
 Example:
+
 ```python
 # [Q: Should we cache this result?]
 result = expensive_computation()

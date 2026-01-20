@@ -14,13 +14,13 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 Manage the project roadmap at `/memory/roadmap.md`.
 
-### If roadmap doesn't exist:
+### If roadmap doesn't exist
 
 1. Copy template from `/templates/roadmap-template.md` to `/memory/roadmap.md`
 2. Ask user about project phases and initial features to track
 3. Fill in the template with provided information
 
-### If roadmap exists:
+### If roadmap exists
 
 1. Load `/memory/roadmap.md`
 2. Scan `/specs/` directory for existing specifications
@@ -34,7 +34,7 @@ Manage the project roadmap at `/memory/roadmap.md`.
 4. If user provided input, add new features or update existing ones
 5. Report changes made
 
-### User commands:
+### User commands
 
 - `add [feature]` - Add a new feature to track
 - `update` - Sync status with existing specs (default if no args)

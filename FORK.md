@@ -15,6 +15,7 @@
 ### Iterative implement workflow with review markers
 
 Changed `/speckit.implement` default behavior to pause for human review after every file:
+
 - Stops after each file is created, prompts user to review
 - AI includes detailed comments in code to make review easier
 - User can add inline markers:
@@ -27,6 +28,7 @@ When processing markers, straightforward items are fixed immediately; complex on
 Automated mode available via "implement all" or "no review".
 
 **Files changed:**
+
 - `templates/commands/implement.md` - Added Review Workflow as default
 - `templates/agent-file-template.md` - Added Review Workflow documentation
 
@@ -37,25 +39,49 @@ Added "Spec-first" guideline to agent-file-template.md: ensure a spec exists bef
 ### Roadmap template and command
 
 Added roadmap support for tracking multi-feature projects:
+
 - `/speckit.roadmap` command to create/update the roadmap
 - Syncs status with existing specs automatically
 - Commands: `add [feature]`, `update`, `status`
 
 **Files added:**
+
 - `templates/roadmap-template.md` - Template for roadmap
 - `templates/commands/roadmap.md` - Slash command
 
 ### Test plan command
 
 Added `/speckit.tests` command to generate reviewer-friendly test plans:
+
 - Documents what behaviors will be tested in plain language
 - Helps non-technical reviewers verify test coverage
 - Maps spec requirements to tests for traceability
 - Reconciles with existing tests, flags gaps and orphans
 
 **Files added:**
+
 - `templates/tests-template.md` - Template for test plans
 - `templates/commands/tests.md` - Slash command
+
+### AI instruction files during init
+
+`specify init` now creates an AI-specific instruction file for the selected assistant:
+
+| AI | Instruction File |
+|----|------------------|
+| Claude | `.claude/CLAUDE.md` |
+| GitHub Copilot | `.github/copilot-instructions.md` |
+| Cursor | `.cursor/rules/project.mdc` |
+| Windsurf | `.windsurfrules` |
+| Others | `instructions.md` (fallback) |
+
+Features:
+- If file exists, prompts: keep original / replace / append
+- Cursor files include required MDC frontmatter
+- Unsupported AIs offered generic `instructions.md` fallback
+
+**Files changed:**
+- `src/specify_cli/__init__.py` - Added `AI_INSTRUCTION_FILES`, `DEFAULT_AI_INSTRUCTIONS`, `setup_ai_instructions()`
 
 ## Versioning
 
