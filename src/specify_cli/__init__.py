@@ -230,6 +230,51 @@ AGENT_CONFIG = {
 
 SCRIPT_TYPE_CHOICES = {"sh": "POSIX Shell (bash/zsh)", "ps": "PowerShell"}
 
+# AI instruction file paths (relative to project root)
+# AIs not in this dict will be offered a fallback instructions.md
+AI_INSTRUCTION_FILES = {
+    "claude": ".claude/CLAUDE.md",
+    "copilot": ".github/copilot-instructions.md",
+    "cursor-agent": ".cursor/rules/project.mdc",
+    "windsurf": ".windsurfrules",
+}
+
+DEFAULT_AI_INSTRUCTIONS = """\
+# Project Instructions
+
+## Review Workflow
+
+**Pause after each file**: After creating or significantly editing a file, STOP and prompt me to review before moving to the next file. Don't batch-create multiple files without review.
+
+I'll use these markers:
+- `[Q: ...]` - question
+- `[C: ...]` - comment/feedback
+- `[TODO: ...]` - something to add
+
+When I say "check my comments", scan the file for these markers:
+- Make straightforward changes immediately
+- Discuss anything non-obvious before changing
+
+When I say "looks good" or "done", proceed to the next file.
+
+## Preferences
+
+- Don't edit files unless I tell you to - I like to discuss first and agree on a plan
+- Use `uv` for all Python operations: `uv run script.py`, `uv pip install`, `uv sync`, etc.
+
+## Project Guidelines
+
+- **Roadmap**: Feature roadmap lives at `.specify/roadmap.md`. Check it when ready for next steps.
+- **Spec-first**: Before implementing any feature, ensure a spec exists. If unclear, write/update the spec first.
+"""
+
+CURSOR_MDC_FRONTMATTER = """\
+---
+description: Project coding guidelines
+alwaysApply: true
+---
+"""
+
 CLAUDE_LOCAL_PATH = Path.home() / ".claude" / "local" / "claude"
 
 BANNER = """
@@ -566,6 +611,91 @@ def init_git_repo(project_path: Path, quiet: bool = False) -> Tuple[bool, Option
         return False, error_msg
     finally:
         os.chdir(original_cwd)
+
+
+def setup_ai_instructions(project_path: Path, selected_ai: str) -> None:
+    """Set up AI instruction file for the project.
+
+    Creates an instruction file appropriate for the selected AI assistant.
+    If the AI is not in AI_INSTRUCTION_FILES, offers to create a generic
+    instructions.md file instead.
+
+    Args:
+        project_path: Path to the project directory
+        selected_ai: The selected AI assistant key (e.g., "claude", "copilot")
+    """
+    # Determine instruction file path
+    if selected_ai in AI_INSTRUCTION_FILES:
+        rel_path = AI_INSTRUCTION_FILES[selected_ai]
+        instruction_file = project_path / rel_path
+        is_fallback = False
+    else:
+        # Offer fallback for unsupported AIs
+        ai_name = AGENT_CONFIG.get(selected_ai, {}).get("name", selected_ai)
+        supported_ais = ", ".join(AI_INSTRUCTION_FILES.keys())
+        console.print(f"\n[yellow]Note:[/yellow] Native instruction files are only generated for: {supported_ais}")
+
+        if sys.stdin.isatty():
+            create_fallback = typer.confirm(
+                f"Would you like to create a generic instructions.md file for {ai_name}?",
+                default=True
+            )
+        else:
+            create_fallback = True
+
+        if not create_fallback:
+            return
+
+        rel_path = "instructions.md"
+        instruction_file = project_path / rel_path
+        is_fallback = True
+
+    # Prepare content
+    content = DEFAULT_AI_INSTRUCTIONS
+    if selected_ai == "cursor-agent":
+        content = CURSOR_MDC_FRONTMATTER + content
+
+    # Check if file already exists
+    if instruction_file.exists():
+        console.print(f"\n[yellow]Instruction file already exists:[/yellow] {rel_path}")
+
+        if sys.stdin.isatty():
+            choices = {
+                "keep": "Keep original",
+                "replace": "Replace with new",
+                "append": "Append new to original",
+            }
+            choice = select_with_arrows(choices, "How would you like to handle this?", "keep")
+        else:
+            choice = "keep"
+            console.print("[dim]Non-interactive mode: keeping original file[/dim]")
+
+        if choice == "keep":
+            console.print(f"[dim]Kept existing {rel_path}[/dim]")
+            return
+        elif choice == "replace":
+            instruction_file.write_text(content)
+            console.print(f"[green]✓[/green] Replaced {rel_path}")
+        elif choice == "append":
+            existing_content = instruction_file.read_text()
+            separator = "\n\n---\n\n# Specify Project Instructions\n\n"
+            instruction_file.write_text(existing_content + separator + content)
+            console.print(f"[green]✓[/green] Appended to {rel_path}")
+    else:
+        # Create directory if needed
+        instruction_file.parent.mkdir(parents=True, exist_ok=True)
+        instruction_file.write_text(content)
+        file_type = "fallback " if is_fallback else ""
+        console.print(f"[green]✓[/green] Created {file_type}instruction file: {rel_path}")
+
+    # Warn if there's also a root-level instruction file that might conflict
+    root_claude_md = project_path / "CLAUDE.md"
+    if selected_ai == "claude" and root_claude_md.exists():
+        console.print(
+            f"\n[yellow]Note:[/yellow] A root-level CLAUDE.md also exists. "
+            "Claude Code will read both files. Consider consolidating them."
+        )
+
 
 def handle_vscode_settings(sub_item, dest_file, rel_path, verbose=False, tracker=None) -> None:
     """Handle merging or copying of .vscode/settings.json files."""
@@ -1164,6 +1294,10 @@ def init(
             pass
 
     console.print(tracker.render())
+
+    # Set up AI instruction file
+    setup_ai_instructions(project_path, selected_ai)
+
     console.print("\n[bold green]Project ready.[/bold green]")
     
     # Show git error details if initialization failed
